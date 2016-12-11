@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Building an AppleTV Application</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<!-- Title Slide -->
+				<section>
+					<h2>Building an AppleTV Application</h2>
+					<h4 class="fragment">
+						in less than 30mins...
+						<span class="fragment">Seriously!!!</span>
+					</h4>
+				</section>
+
+				<!-- Intro Slide -->
+				<section>
+					<p>No it's NOT &#8220;Hello World&#8221;</p>
+					<p class="fragment">No it's NOT ugly looking</p>
+					<p class="fragment">Do I need a UI design? <i class="fragment">NO!</i></p>
+					<p class="fragment">Do I need to know Swift or Objective-C? <i class="fragment">Well...</i> <i class="fragment">NO!</i></p>
+				</section>
+
+				<!-- How Slide -->
+				<section>
+					<h4>How do we do it?</h4>
+					<ul>
+						<li class="fragment">Build <b>TVML App</b> <i class="fragment">using</i></li>
+						<li class="fragment"><b>TVML</b> - <i>Apple's Television Markup Language</i></li>
+						<li class="fragment">TVMLKit JS aka <b>TVJS</b> - <i>Apple's JavaScript API framework</i></li>
+						<li class="fragment"><b>TVMLKit</b> Framework - <i>native access to TVJS and TVML</i></li>
+						<li class="fragment"><b>atvjs</b> - <i>minimalistic JS framework on top of TVJS</i></li>
+					</ul>
+				</section>
+
+				<!-- TVML Slide -->
+				<section>
+					<section>
+						<h4>TVML</h4>
+						<ul>
+							<li class="fragment">XML based</li>
+							<li class="fragment">Provides layouts and structures</li>
+							<li class="fragment">Predefined templates</li>
+							<li class="fragment">Elements, Styles, Attributes</li>
+						</ul>
+						<br><br>
+						<p class="fragment">
+							<a href="#" class="navigate-down enabled">
+								<img width="44.5" height="59.5" alt="Down arrow" src="img/arrow.png">
+							</a>
+						</p>
+					</section>
+					<section>
+						<p>&lt;productTemplate /&gt;</p>
+						<pre>
+							<code class="xml">
+<productTemplate>
+   <banner>
+      <infoList>...</infoList>
+      <stack>
+        <title>...</title>
+        <subtitle>...</subtitle>
+        <row>...</row>
+        <description>...</description>
+        <buttonLockup>...</buttonLockup>
+      </stack>
+      <heroImage src="..."></heroImage>
+   </banner>
+   <shelf>...</shelf>
+   <productInfo>...</productInfo>
+</productTemplate>
+							</code>
+						</pre>
+						<a href="#" class="navigate-down enabled">
+							<img width="44.5" height="59.5" alt="Down arrow" src="img/arrow.png">
+						</a>
+					</section>
+					<section>
+						<img class="stretch" src="img/productTemplate_1_2x.png">
+					</section>
+				</section>
+
+				<!-- TVJS Slide -->
+				<section>
+					<section>
+						<h4>TVMLKit JS <i>aka</i> TVJS</h4>
+						<ul>
+							<li class="fragment">Display and control TVML</li>
+							<li class="fragment">Respond to user actions and events</li>
+							<li class="fragment">Standard DOM methods and objects</li>
+							<li class="fragment">Custom classes and methods</li>
+						</ul>
+						<br><br>
+						<p class="fragment">
+							<a href="#" class="navigate-down enabled">
+								<img width="44.5" height="59.5" alt="Down arrow" src="img/arrow.png">
+							</a>
+						</p>
+					</section>
+					<section>
+						<pre>
+							<code class="js">
+// TVML loading template
+var loadingTemplate = `<?xml version="1.0" encoding="UTF-8" ?>
+	<document>
+		<loadingTemplate>
+			<activityIndicator>
+				<title>Loading requested page</title>
+			</activityIndicator>
+		</loadingTemplate>
+	</document>`;
+// create an instance of DOM parser class
+var parser = new DOMParser();
+// create the loader DOM using the template and the DOM parser
+var loader = parser.parseFromString(loadingTemplate, 'application/xml');
+// subscribe to app launch event to push loader to the stack on launch
+App.onLaunch = function(options) {
+    navigationDocument.pushDocument(loader);
+};
+							</code>
+						</pre>
+						<a href="#" class="navigate-down enabled">
+							<img width="44.5" height="59.5" alt="Down arrow" src="img/arrow.png">
+						</a>
+					</section>
+					<section>
+						<img class="stretch" src="img/loadingTemplateSS_2x.png">
+					</section>
+				</section>
+
+				<!-- TVMLKit Framework Slide -->
+				<section>
+					<h4>TVMLKit Framework</h4>
+					<ul>
+						<li class="fragment">Native framework (available in Swift/Objective-C)</li>
+						<li class="fragment">Incorporate JavaScript and TVML files in binary apps</li>
+						<li class="fragment">Customize predefined TVML</li>
+						<li class="fragment">Customize JavaScript environment in tvOS apps</li>
+					</ul>
+				</section>
+
+				<!-- TVML App architecture Slide -->
+				<section>
+					<section>
+						<h4>TVML App architecture</h4>
+						<img class="stretch" src="img/flow_diagram_2x.png">
+						Client-Server app Model <br>
+						<a href="#" class="navigate-down enabled">
+							<img width="44.5" height="59.5" alt="Down arrow" src="img/arrow.png">
+						</a>
+					</section>
+					<section>
+						<img class="stretch" src="img/flow_diagram2_2x.png"><br>
+						Client-Server app flow
+					</section>
+				</section>
+
+				<!-- atvjs -->
+				<section>
+					<section>
+						<h4>atvjs</h4>
+						<ul>
+							<li class="fragment">Provides minimalistic architecture</li>
+							<li class="fragment">feel of SPA (single page application)</li>
+							<li class="fragment">create pages and later navigate</li>
+							<li class="fragment">utility methods and wrappers</li>
+						</ul>
+						<br><br>
+						<p class="fragment">
+							<a href="#" class="navigate-down enabled">
+								<img width="44.5" height="59.5" alt="Down arrow" src="img/arrow.png">
+							</a>
+						</p>
+					</section>
+					<section>
+						<pre>
+							<code class="js">
+// create a page named `home`
+ATV.Page.create({
+    name: 'home',
+    url: 'path/to/your/api/that/returns/json',
+    template: your_template_function
+});
+// create a page named `movies`
+ATV.Page.create({
+    name: 'movies',
+    url: 'path/to/your/api/that/returns/json',
+    template: your_template_function
+});
+// navigate to the `home` page 
+ATV.Navigation.navigate('home');
+// navigate to the `movies` page
+ATV.Navigation.navigate('movies');
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<!-- References -->
+				<section>
+					<h4>References</h4>
+					<ul>
+						<li><a target="_blank" href="https://developer.apple.com/library/content/documentation/General/Conceptual/AppleTV_PG/YourFirstAppleTVApp.html#//apple_ref/doc/uid/TP40015241-CH3-SW1">Building AppleTV Apps (https://developer.apple.com/library/content/documentation/General/Conceptual/AppleTV_PG/YourFirstAppleTVApp.html#//apple_ref/doc/uid/TP40015241-CH3-SW1)</a></li>
+						<li><a target="_blank" href="https://developer.apple.com/library/prerelease/content/documentation/TVMLKitJS/Conceptual/TVMLProgrammingGuide/index.html#//apple_ref/doc/uid/TP40016718-CH6-SW1">TVML Apps (https://developer.apple.com/library/prerelease/content/documentation/TVMLKitJS/Conceptual/TVMLProgrammingGuide/index.html#//apple_ref/doc/uid/TP40016718-CH6-SW1)</a></li>
+						<li><a target="_blank" href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html#//apple_ref/doc/uid/TP40015064-CH41-SW1">TVML (https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html#//apple_ref/doc/uid/TP40015064-CH41-SW1)</a></li>
+						<li><a target="_blank" href="https://developer.apple.com/reference/tvmljs">TVMLKit JS (https://developer.apple.com/reference/tvmljs)</a></li>
+						<li><a target="_blank" href="https://developer.apple.com/reference/tvmlkit">TVMLKit (https://developer.apple.com/reference/tvmlkit)</a></li>
+						<li><a target="_blank" href="https://github.com/emadalam/atvjs">atvjs (https://github.com/emadalam/atvjs)</a></li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					// Zoom in and out with Alt+click
+        			{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+				]
+			});
+
+			// hide cursor on inactivity
+			(function() {
+			    var mouseTimer = null,
+			    	cursorVisible = true;
+
+			    function disappearCursor() {
+			        mouseTimer = null;
+			        document.body.style.cursor = 'none';
+			        cursorVisible = false;
+			    }
+
+			    document.onmousemove = function() {
+			        if (mouseTimer) {
+			            window.clearTimeout(mouseTimer);
+			        }
+			        if (!cursorVisible) {
+			            document.body.style.cursor = 'default';
+			            cursorVisible = true;
+			        }
+			        mouseTimer = window.setTimeout(disappearCursor, 5000);
+			    };
+			})();
+		</script>
+	</body>
+</html>
