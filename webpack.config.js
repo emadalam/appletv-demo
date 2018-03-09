@@ -10,54 +10,62 @@ var
     };
 
 module.exports.development = {
-    debug: true,
     devtool: 'eval',
     entry: entry,
     output: output,
     resolve: {
-        root: root,
         alias: {
             'handlebars': 'handlebars/runtime.js'
-        }
+        },
+        modules: [root, 'node_modules']
     },
-    plugins: [],
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js?$/,
             exclude: /node_modules|bower_components|native/,
-            loader: 'babel-loader'
+            use: [{
+                loader: 'babel-loader'
+            }]
         }, {
             test: /\.hbs$/,
-            loader: 'handlebars-loader'
+            use: [{
+                loader: 'handlebars-loader'
+            }]
         }, {
             test: /\.css$|\.json/,
-            loader: 'raw-loader'
+            use: [{
+                loader: 'raw-loader'
+            }]
         }]
     }
 };
 
 module.exports.production = {
-    debug: false,
     entry: entry,
     output: output,
     resolve: {
-        root: root,
         alias: {
             'handlebars': 'handlebars/runtime.js'
-        }
+        },
+        modules: [root, 'node_modules']
     },
-    plugins: [],
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js?$/,
             exclude: /node_modules|bower_components|native/,
-            loader: 'babel-loader'
+            use: [{
+                loader: 'babel-loader'
+            }]
         }, {
             test: /\.hbs$/,
-            loader: 'handlebars-loader'
+            use: [{
+                loader: 'handlebars-loader'
+            }]
         }, {
             test: /\.css$|\.json/,
-            loader: 'raw-loader'
+            use: [{
+                loader: 'raw-loader'
+            }]
         }]
     }
 };
